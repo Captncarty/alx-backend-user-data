@@ -23,6 +23,7 @@ elif auth_type == 'auth':
     from api.v1.auth.auth import Auth
     auth = Auth()
 
+
 @app.before_request
 def request_filter() -> str:
     """
