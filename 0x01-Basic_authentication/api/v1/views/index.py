@@ -31,7 +31,7 @@ def forbidden() -> str:
         - a forbidden message
     """
     abort(403, description='Forbidden page')
- 
+
 
 @app_views.route('/stats/', strict_slashes=False)
 def stats() -> str:
@@ -42,4 +42,3 @@ def stats() -> str:
     stats = {}
     stats['users'] = User.count()
     return jsonify(stats)
-
