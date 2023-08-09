@@ -33,5 +33,5 @@ def unauthorized() -> str:
         - Custom Error Page
         - abort(401)
     """
-    return abort(401)
+    abort(401)
  
