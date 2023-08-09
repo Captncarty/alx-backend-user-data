@@ -3,7 +3,9 @@
 Defines a BasicAuth class that inherits from Auth class
 """
 import base64
+from typing import Tuple, TypeVar, Union
 from api.v1.auth.auth import Auth
+from api.v1.views.users import User
 
 
 class BasicAuth(Auth):
@@ -53,3 +55,22 @@ class BasicAuth(Auth):
             return None, None
         credentials = decoded_base64_authorization_header.split(':')
         return credentials[0], ':'.join(credentials[1:])
+
+    def user_object_from_credentials(
+        self, user_email: str, user_pwd: str
+    ) -> TypeVar('User'):
+        """ that returns the User instance based on his email and password
+        """
+        if (
+            user_email is None or type(user_email) != str
+            or user_pwd is None or type(user_pwd) != str
+        ):
+            return None
+
+        User.load_from_file()
+        if User.count() > 0:
+            users = User.search({'email': user_email})
+            for user in users:
+                if user.is_valid_password(user_pwd):
+                    return user
+        return None
