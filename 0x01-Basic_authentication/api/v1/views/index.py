@@ -30,7 +30,6 @@ def stats() -> str:
 def unauthorized() -> str:
     """ GET /api/v1/unauthorized
     Return:
-        - Custom Error Page
         - abort(401)
     """
     abort(401)
