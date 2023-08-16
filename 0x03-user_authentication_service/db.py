@@ -26,7 +26,8 @@ class DB:
 
     @property
     def _session(self) -> Session:
-        """Memoized session object
+        """
+        Memoized session object
         """
         if self.__session is None:
             DBSession = sessionmaker(bind=self._engine)
@@ -54,3 +55,23 @@ class DB:
         if details is None:
             raise NoResultFound
         return details
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """
+        implement the DB.update_user method that takes as argument a required
+        user_id integer and arbitrary keyword arguments, and returns None.
+
+        The method will use find_user_by to locate the user to update,
+        then will update the user’s attributes as passed in the method’s
+        arguments then commit changes to the database.
+        if argument doesn't correspond, raise ValueError"""
+        user_detail = self.find_user_by(id=user_id)
+
+        for key, value in kwargs.items():
+            if hasattr(user_detail, key):
+                setattr(user_detail, key, value)
+            else:
+                raise ValueError
+
+        self._session.commit()
+        return None
