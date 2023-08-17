@@ -59,7 +59,6 @@ def profile() -> str:
     Use it to find the user. If the user exist,
     respond with a 200 HTTP status and
     the following JSON payload:
-    {"email": "<user email>"}
     If the session ID is invalid
     or
     the user does not exist,
