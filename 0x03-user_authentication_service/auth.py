@@ -6,7 +6,7 @@ The returned bytes is a salted hash of the input password,
 hashed with bcrypt.hashpw.
 """
 
-from bcrypt import gensalt, hashpw
+from bcrypt import gensalt, hashpw, checkpw
 from sqlalchemy.orm.exc import NoResultFound
 from db import DB
 from user import User
@@ -41,3 +41,19 @@ class Auth:
             hashed_pw = _hash_password(password)
             register = self._db.add_user(email, hashed_pw)
             return register
+
+    def valid_login(self, email: str, password: str) -> bool:
+        """
+        Implement the Auth.valid_login method.
+        It should expect email and password required arguments
+        and return a boolean.
+        locate the user by email.
+        If it exists, check the password with bcrypt.checkpw.
+        If it matches return True. In any other case, return False.
+        """
+        try:
+            user = self._db.find_user_by(email=email)
+            check = checkpw(password.encode('utf-8'), user.hashed_password)
+            return check
+        except NoResultFound:
+            return False
