@@ -9,7 +9,7 @@ hashed with bcrypt.hashpw.
 from bcrypt import gensalt, hashpw
 
 
-def _hash_password(password):
+def _hash_password(password: str) -> str:
     """
     input password hashed with bcrypt.hashpw
     """
