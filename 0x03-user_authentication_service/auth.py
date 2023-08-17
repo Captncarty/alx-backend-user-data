@@ -6,6 +6,7 @@ The returned bytes is a salted hash of the input password,
 hashed with bcrypt.hashpw.
 """
 
+from uuid import uuid4
 from bcrypt import gensalt, hashpw, checkpw
 from sqlalchemy.orm.exc import NoResultFound
 from db import DB
@@ -21,6 +22,15 @@ def _hash_password(password: str) -> str:
         hashed_pwd = hashpw(password.encode('utf-8'), salt)
         return hashed_pwd
     print(f'password: "{password}", fix something in')
+
+def _generate_uuid() -> str:
+    """
+    In this task you will implement a _generate_uuid function in the auth module
+    The function should return a string representation of a new UUID
+    Use the uuid module.
+    The method is private to the auth module and should NOT be used outside of it.
+    """
+    return str(uuid4())
 
 
 class Auth:
