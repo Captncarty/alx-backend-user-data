@@ -23,12 +23,13 @@ def _hash_password(password: str) -> str:
         return hashed_pwd
     print(f'password: "{password}", fix something in')
 
+
 def _generate_uuid() -> str:
     """
-    In this task you will implement a _generate_uuid function in the auth module
-    The function should return a string representation of a new UUID
+    Implement a _generate_uuid function in the auth module
+    return a string representation of a new UUID
     Use the uuid module.
-    The method is private to the auth module and should NOT be used outside of it.
+    method is private to the auth module
     """
     return str(uuid4())
 
