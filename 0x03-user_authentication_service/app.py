@@ -5,7 +5,7 @@ Create a Flask app that has a single GET route ("/")
 and use flask.jsonify to return a JSON payload of the form:
 """
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
 
 
@@ -46,6 +46,7 @@ def users() -> str:
             }), 400
     return None
 
+
 @app.route('/sessions', methods=['POST'])
 def sessions() -> str:
     """
@@ -69,13 +70,16 @@ def sessions() -> str:
     response.set_cookie("session_id", session_id)
     return response
 
+
 @app.route('/sessions', methods=['DELETE'])
 def logout() -> str:
     """
-           Implement a logout function to respond to the DELETE /sessions route.
+           Implement a logout function to respond to the DELETE
+           /sessions route.
            Expected to contain the session ID as a cookie with key "session_id"
            Find the user with the requested session ID.
-           If the user exists destroy the session and redirect the user to GET /
+           If the user exists destroy the session and redirect the
+           user to GET /
            If the user does not exist, respond with a 403 HTTP status.
      """
     cookie = request.cookies.get("session_id", None)
@@ -85,6 +89,7 @@ def logout() -> str:
         abort(403)
     auth.destroy_session(user.id)
     return redirect('/')
+
 
 @app.route('/profile', methods=['GET'], strict_slashes=False)
 def profile() -> str:
@@ -143,6 +148,7 @@ def update_password() -> str:
 
     message = {"email": user_email, "message": "Password updated"}
     return jsonify(message), 200
+
 
 if __name__ == '__main__':
     app.run(debug=True)

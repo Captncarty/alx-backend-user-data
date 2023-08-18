@@ -7,6 +7,7 @@ hashed with bcrypt.hashpw.
 """
 
 from uuid import uuid4
+from typing import Union
 from bcrypt import gensalt, hashpw, checkpw
 from sqlalchemy.orm.exc import NoResultFound
 from db import DB
@@ -69,16 +70,8 @@ class Auth:
         except NoResultFound:
             return False
 
-
-def create_session(self, email: str) -> str:
-        """
-        Implement the Auth.create_session method
-        takes an email string argument and returns the session ID as a string
-        The method should find the user corresponding to the email
-        generate a new UUID and store it in the database
-        as the user’s session_id, then return the session ID.
-        Remember that only public methods of self._db can be used.
-        """
+    def create_session(self, email: str) -> str:
+        """ Creates session ID using UUID, finds user by email """
         try:
             user = self._db.find_user_by(email=email)
         except NoResultFound:
@@ -90,7 +83,8 @@ def create_session(self, email: str) -> str:
 
     def get_user_from_session_id(self, session_id: str) -> Union(str, None):
         """
-        In this task, you will implement the Auth.get_user_from_session_id method.
+        In this task, you will implement the
+        Auth.get_user_from_session_id method.
         It takes a single session_id string argument
         and returns the corresponding User or None.
         If the session ID is None or no user is found,
@@ -106,7 +100,7 @@ def create_session(self, email: str) -> str:
         except NoResultFound:
             return None
 
-    def destroy_session(self, user_id: int) -> None::
+    def destroy_session(self, user_id: int) -> None:
         """
         In this task, you will implement Auth.destroy_session.
         The method takes a single user_id integer argument and returns None.
@@ -117,7 +111,7 @@ def create_session(self, email: str) -> str:
             return None
         try:
             user = self._db.find_user_by(id=user_id)
-            return self._db.update_user(user_id, session_id=None)
+            return self._db.update_user(user, session_id=None)
         except NoResultFound:
             return None
 
