@@ -45,26 +45,6 @@ def users() -> str:
             "message": "email already registered"
             }), 400
     return None
-    
-@app.route('/profile', methods=['GET']
-def profile() -> str:
-    """
-    implement a profile function to respond to the
-    GET /profile route
-    Expected to contain a session_id cookie
-    Use it to find the user. If the user exist,
-    respond with a 200 HTTP status and
-    the following JSON payload:
-    If the session ID is invalid
-    or
-    the user does not exist,
-    respond with a 403 HTTP status.
-    """
-    session_id = request.cookies.get("session_id", None)
-    user = auth.get_user_from_session_id(session_id)
-    if session_id is None or user is None:
-        abort(403)
-    return jsonify({"email": user.email}), 200
 
 
 if __name__ == '__main__':
